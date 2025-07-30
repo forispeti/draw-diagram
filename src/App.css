@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+.hide-resize-observer {
+  display: none !important;
+}
+
+.react-flow__node-group{
+  z-index: -10 !important;
+  border: none !important;
+  padding: 0px !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
