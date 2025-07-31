@@ -24,15 +24,16 @@ import NodeControlPanel from "./components/NodeControlPanel";
 import { toPng } from "html-to-image";
 
 const initialNodes = [
-	{ id: "n1", position: { x: 0, y: 0 }, data: { label: "Node 1", color: "#fff" } },
-	{ id: "n2", position: { x: 0, y: 100 }, data: { label: "Node 2", color: "#fff" } },
+	{ id: "1753950545694", position: { x: 0, y: 0 }, data: { label: "Node 1", color: "#fff" } },
+	{ id: "1753950639905", position: { x: 0, y: 100 }, data: { label: "Node 2", color: "#fff" } },
 ];
-const initialEdges = [{ id: "n1-n2", source: "n1", target: "n2", style: { strokeDasharray: "0 0" } }];
+const initialEdges = [{ id: "1753950545694-1753950639905", source: "1753950545694", target: "1753950639905", style: { strokeDasharray: "0 0" } }];
 
 const nodeTypes = {
 	default: ResizableNode,
 	input: ResizableNode,
 	output: ResizableNode,
+	doubleOutput: ResizableNode,
 	group: GroupNode,
 };
 
@@ -426,7 +427,7 @@ export default function App() {
 				<button className="mt-2 bg-green-500 text-white p-2 rounded ml-2" onClick={onRestore}>
 					Restore
 				</button>
-				<button className="mt-2 bg-green-500 text-white p-2 rounded ml-2" onClick={onExportPDF}>
+				<button className="mt-2 bg-gray-400 text-white p-2 rounded ml-2" onClick={onExportPDF}>
 					PDF
 				</button>
 				{selectedItem && (
@@ -438,7 +439,7 @@ export default function App() {
 										nds = nds.filter((n) => n.id !== selectedItem.value.id);
 										setSelectedItem(null);
 										return nds;
-								  })
+								  }) && onNodeDragStop(null, selectedItem.value)
 								: setEdges((eds) => {
 										eds = eds.filter((e) => e.id !== selectedItem.value.id);
 										setSelectedItem(null);
@@ -450,7 +451,7 @@ export default function App() {
 					</button>
 				)}
 				{selectedItem && selectedItem.type === "edge" && (
-					<EdgeControlPanel selectedItem={selectedItem} onInputChange={onInputChange} setEdges={setEdges} edges={edges} />
+					<EdgeControlPanel selectedItem={selectedItem} onInputChange={onInputChange} setEdges={setEdges} edges={edges} nodes={nodes} />
 				)}
 				{selectedItem && selectedItem.type === "node" && (
 					<NodeControlPanel selectedItem={selectedItem} onInputChange={onInputChange} setNodes={setNodes} nodes={nodes} modalTypes={modalTypes} />

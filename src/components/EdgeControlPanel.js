@@ -1,31 +1,45 @@
 import { Checkbox, Input, MenuItem, Select } from "@mui/material";
 
-const EdgeControlPanel = ({ selectedItem, onInputChange, setEdges, edges }) => {
+const EdgeControlPanel = ({ selectedItem, onInputChange, setEdges, edges, nodes }) => {
 	const selectedEdge = edges.find((edge) => edge.id === selectedItem.value.id);
 	const edgeTypes = {
 		default: "0 0",
 		dashed: "4 2",
 		dotted: "1 2",
 	}
+	const nodeOptions = nodes.map(node => ({
+		id: node.id,
+		label: node.data.label ?? node.id
+	}));
 	return (
 		<div className='flex flex-col'>
 			<h2 className='mt-4 mb-4 font-lg font-bold'>Edge Details</h2>
 			<strong>Target:</strong>{" "}
-			<Input
-				type='text'
+			<Select
 				name='target'
-				defaultValue={selectedItem.value.target}
-				onInput={(e) => onInputChange(e, setEdges)}
-				className='border rounded py-1 px-2'
-			/>
+				className='w-full border rounded h-[41px]'
+				value={selectedItem.value.target}
+				onChange={(e) => onInputChange(e, setEdges)}
+			>
+				{nodeOptions.map((opt) => (
+					<MenuItem key={opt.id} value={opt.id}>
+						{opt.label}
+					</MenuItem>
+					))}
+			</Select>
 			<strong>Source:</strong>{" "}
-			<Input
-				type='text'
+			<Select
 				name='source'
-				defaultValue={selectedItem.value.source}
-				onInput={(e) => onInputChange(e, setEdges)}
-				className='border rounded py-1 px-2'
-			/>
+				className='w-full border rounded h-[41px]'
+				value={selectedItem.value.source}
+				onChange={(e) => onInputChange(e, setEdges)}
+			>
+				{nodeOptions.map((opt) => (
+					<MenuItem key={opt.id} value={opt.id}>
+						{opt.label}
+					</MenuItem>
+					))}
+			</Select>
 			<strong>Label:</strong>{" "}
 			<Input
 				type='text'

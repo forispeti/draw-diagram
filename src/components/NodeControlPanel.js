@@ -5,6 +5,7 @@ const NodeControlPanel = ({ selectedItem, onInputChange, setNodes, nodes, modalT
 	return (
 		<div className='flex flex-col'>
 			<h2 className='mt-4 mb-4 font-lg font-bold'>Node Details</h2>
+			<span><strong>ID:</strong>{" "}{selectedNode.id}</span>
 			<strong>Position X:</strong>{" "}
 			<Input
 				type='text'
