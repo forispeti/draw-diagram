@@ -192,8 +192,8 @@
   .left-8 {
     left: calc(var(--spacing) * 8);
   }
-  .m-1 {
-    margin: calc(var(--spacing) * 1);
+  .m-\[2px\] {
+    margin: 2px;
   }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
@@ -213,14 +213,14 @@
   .flex {
     display: flex;
   }
-  .table {
-    display: table;
-  }
   .h-10 {
     height: calc(var(--spacing) * 10);
   }
-  .h-\[calc\(100\%-8px\)\] {
-    height: calc(100% - 8px);
+  .h-\[41px\] {
+    height: 41px;
+  }
+  .h-\[calc\(100\%-4px\)\] {
+    height: calc(100% - 4px);
   }
   .h-full {
     height: 100%;
@@ -228,11 +228,11 @@
   .h-screen {
     height: 100vh;
   }
+  .min-h-\[41px\] {
+    min-height: 41px;
+  }
   .w-10 {
     width: calc(var(--spacing) * 10);
-  }
-  .w-\[100px\] {
-    width: 100px;
   }
   .w-\[150px\] {
     width: 150px;
@@ -243,11 +243,11 @@
   .w-screen {
     width: 100vw;
   }
-  .max-w-\[100px\] {
-    max-width: 100px;
+  .min-w-\[146px\] {
+    min-width: 146px;
   }
-  .border-collapse {
-    border-collapse: collapse;
+  .transform {
+    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
   .cursor-pointer {
     cursor: pointer;
@@ -325,19 +325,12 @@
   .text-white {
     color: var(--color-white);
   }
-  .underline {
-    text-decoration-line: underline;
-  }
   .opacity-60 {
     opacity: 60%;
   }
   .shadow-lg {
     --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
-  }
-  .outline {
-    outline-style: var(--tw-outline-style);
-    outline-width: 1px;
   }
   .outline-none {
     --tw-outline-style: none;
@@ -361,6 +354,35 @@
   outline: none !important;
   box-shadow: none !important;
   background-color: transparent !important;
+}
+.react-flow__node-input, .react-flow__node-output, .react-flow__node-default {
+  padding: 0px !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+.react-flow__edge-textwrapper > rect {
+  opacity: 60% !important;
+  fill: #fff;
+}
+@property --tw-rotate-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-y {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-z {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-y {
+  syntax: "*";
+  inherits: false;
 }
 @property --tw-border-style {
   syntax: "*";
@@ -436,14 +458,14 @@
   inherits: false;
   initial-value: 0 0 #0000;
 }
-@property --tw-outline-style {
-  syntax: "*";
-  inherits: false;
-  initial-value: solid;
-}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
+      --tw-rotate-x: initial;
+      --tw-rotate-y: initial;
+      --tw-rotate-z: initial;
+      --tw-skew-x: initial;
+      --tw-skew-y: initial;
       --tw-border-style: solid;
       --tw-font-weight: initial;
       --tw-shadow: 0 0 #0000;
@@ -460,7 +482,6 @@
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
-      --tw-outline-style: solid;
     }
   }
 }

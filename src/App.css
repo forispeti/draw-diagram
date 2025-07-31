@@ -12,3 +12,12 @@
   box-shadow: none !important;
   background-color: transparent !important;
 }
+.react-flow__node-input, .react-flow__node-output, .react-flow__node-default {
+  padding: 0px !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+.react-flow__edge-textwrapper > rect {
+  opacity: 60% !important;
+  fill: #fff
+}

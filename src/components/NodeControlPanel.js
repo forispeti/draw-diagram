@@ -39,7 +39,17 @@ const NodeControlPanel = ({ selectedItem, onInputChange, setNodes, nodes, modalT
 					selectedNode?.data?.color ?? ""
 				}
 				onInput={(e) => onInputChange(e, setNodes)}
-				className='border rounded p-0'
+				className='border rounded p-0 h-[41px]'
+			/>
+			<strong>Text color:</strong>{" "}
+			<Input
+				type='color'
+				name='style.color'
+				value={
+					selectedNode?.style?.color ?? ""
+				}
+				onInput={(e) => onInputChange(e, setNodes)}
+				className='border rounded p-0 h-[41px]'
 			/>
 			<strong>Height:</strong>{" "}
 			<Input
@@ -66,7 +76,7 @@ const NodeControlPanel = ({ selectedItem, onInputChange, setNodes, nodes, modalT
 			<strong>Type:</strong>{" "}
 			<Select
 				name='type'
-				className='w-full border rounded'
+				className='w-full border rounded h-[41px]'
 				value={selectedItem.value.type ?? "default"}
 				onChange={(e) => onInputChange(e, setNodes)}
 			>

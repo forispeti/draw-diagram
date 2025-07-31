@@ -11,6 +11,8 @@ import {
 	useNodesState,
 	useEdgesState,
 	useReactFlow,
+	// getNodesBounds,
+	// getViewportForBounds,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import ResizableNode from "./components/ResizableNode";
@@ -19,12 +21,13 @@ import AddElementModal from "./components/AddElementModal";
 import { useBeforeRender } from "./components/UseBeforeRender";
 import EdgeControlPanel from "./components/EdgeControlPanel";
 import NodeControlPanel from "./components/NodeControlPanel";
+import { toPng } from "html-to-image";
 
 const initialNodes = [
-	{ id: "n1", position: { x: 0, y: 0 }, data: { label: "Node 1" } },
-	{ id: "n2", position: { x: 0, y: 100 }, data: { label: "Node 2" } },
+	{ id: "n1", position: { x: 0, y: 0 }, data: { label: "Node 1", color: "#fff" } },
+	{ id: "n2", position: { x: 0, y: 100 }, data: { label: "Node 2", color: "#fff" } },
 ];
-const initialEdges = [{ id: "n1-n2", source: "n1", target: "n2" }];
+const initialEdges = [{ id: "n1-n2", source: "n1", target: "n2", style: { strokeDasharray: "0 0" } }];
 
 const nodeTypes = {
 	default: ResizableNode,
@@ -59,6 +62,8 @@ export default function App() {
 	const [selectedItem, setSelectedItem] = useState();
 	const { setViewport } = useReactFlow();
 
+	// Hide resize observer error overlay
+	// This is a workaround for the resize observer error that appears in development mode
 	useBeforeRender(() => {
 		window.addEventListener("error", (e) => {
 			if (e) {
@@ -158,7 +163,7 @@ export default function App() {
 	const onNodeDragStop = useCallback((_, node) => {
 		// Handle node drag stop
 		// Check if dragged node is not a group and is dropped inside a group node
-		const padding = 4;
+		const padding = 2;
 		const bottomMargin = 6;
 		const labelWidth = 100;
 		if (node.type !== "group") {
@@ -339,6 +344,33 @@ export default function App() {
 		restoreFlow();
 	}, [setNodes, setViewport, setEdges]);
 
+	const downloadImage = useCallback((dataUrl) => {
+		const a = document.createElement('a');	
+		
+		a.setAttribute('download', 'felgo-diagram.png');
+		a.setAttribute('href', dataUrl);
+		a.click();
+	}, []);
+
+	const onExportPDF = useCallback(() => {
+		const reactFlowElement = document.querySelector('.react-flow__renderer');
+		const imageWidth = reactFlowElement?.offsetWidth || 1024;
+		const imageHeight = reactFlowElement?.offsetHeight || 768;
+		// const nodesBounds = getNodesBounds(getNodes());
+		// const viewport = getViewportForBounds(nodesBounds, imageWidth, imageHeight, 0.5, 2);
+	
+		toPng(reactFlowElement, {
+		backgroundColor: '#f6f9fc',
+		width: imageWidth,
+		height: imageHeight,
+		style: {
+			width: imageWidth,
+			height: imageHeight,
+			// transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
+		},
+		}).then(downloadImage);
+	}, [downloadImage]);
+
 	return (
 		<div
 			className='h-screen w-screen'
@@ -393,6 +425,9 @@ export default function App() {
 				</button>
 				<button className="mt-2 bg-green-500 text-white p-2 rounded ml-2" onClick={onRestore}>
 					Restore
+				</button>
+				<button className="mt-2 bg-green-500 text-white p-2 rounded ml-2" onClick={onExportPDF}>
+					PDF
 				</button>
 				{selectedItem && (
 					<button
